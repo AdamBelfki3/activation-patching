@@ -10,6 +10,6 @@ def get_next_prediction(prompt, model, show=False):
             probability = torch.nn.functional.softmax(logits, dim=0)[prediction_id].item().save()
 
     if show:
-        print(f"Next Prediction: {prediction_str} | Probability: {probability}")
+        print(f"Next Prediction: {prediction_str} | Probability: {probability:.2f}")
 
     return prediction_id

@@ -9,13 +9,14 @@ def load_model(model_name, remote=True):
     if model_name == "openai-community/gpt2-xl":
         model = LanguageModel(model_name, rename={"transformer": "model", "h": "layers"}, device_map="auto", dispatch=True)
 
-        return model
+    else:
+        if not nnsight.is_model_running(model_name):
+            print(nnsight.ndif_status())
+            raise ValueError(f"Model {model_name} is not currently available on NDIF")
 
-    if not nnsight.is_model_running(model_name):
-        print(nnsight.ndif_status())
-        raise ValueError(f"Model {model_name} is not currently available on NDIF")
+        model = LanguageModel(model_name, device_map="auto", dispatch=not remote)
 
-    model = LanguageModel(model_name, device_map="auto", dispatch=not remote)
+    print(f"Loading model {model_name} | {'Remote' if remote else 'Local'} Execution Mode")
 
     return model
 
