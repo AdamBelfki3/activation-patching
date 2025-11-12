@@ -20,8 +20,8 @@ def plot_token_metrics_line(
 
     if token_ids is None:
         token_ids = []
-        token_ids.append(source_logits.argmax(dim=-1).item())
         token_ids.append(target_logits_clean.argmax(dim=-1).item())
+        token_ids.append(source_logits.argmax(dim=-1).item())
 
     # Convert single token to list for uniform handling
     if not isinstance(token_ids, list):
